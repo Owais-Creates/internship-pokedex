@@ -10,6 +10,7 @@ const Card = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [filteredPokemonList, setFilteredPokemonList] = useState([]);
 
+    // filtering the data from the nested api
     const downloadData = async () => {
         if (pokemonData && pokemonData.results) {
             const pokemonResults = pokemonData.results;
@@ -29,10 +30,13 @@ const Card = () => {
         }
     };
 
+    //running the filtering of data function whenver the main source of data variable changes to restrict any unnecessary behaviour.
     useEffect(() => {
         downloadData();
     }, [pokemonData]);
 
+
+    // filtering the data based on the input and validating it.
     useEffect(() => {
         setFilteredPokemonList(
             pokemonList.filter(pokemon =>
@@ -44,7 +48,10 @@ const Card = () => {
     return (
         <>
             <div className='main-div'>
+                {/* sending the data to search component */}
                 <Search setSearchTerm={setSearchTerm} />
+
+                {/* rendering the data */}
                 <div className='card-div'>
                     {filteredPokemonList.length > 0 ? (
                         filteredPokemonList.map((item, index) => (
